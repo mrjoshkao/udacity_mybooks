@@ -1,6 +1,6 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
 import MainPage from './MainPage.js'
+import SearchPage from './SearchPage.js'
 import * as BooksAPI from './BooksAPI.js'
 import './App.css'
 
@@ -17,17 +17,33 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-     BooksAPI.getAll().then((books) => {
-         this.setState(() => ({
-           books
-         }))
-       })
+    BooksAPI.getAll().then((books) => {
+      this.setState(() => ({
+        books
+      }))
+    })
+  }
+  
+  changeShelf = (book, shelf) => {
+    const changedBook = book;
+    changedBook.shelf = shelf;
+    const newBooks = this.state.books.filter(b => b.id !== book.id);
+    console.log(newBooks.concat([changedBook]));
+    BooksAPI.update(book, shelf).then((book,shelf) => {
+      this.setState((currentState) => ({
+        books : newBooks.concat([changedBook])
+      }))
+    })
+    console.log(changedBook);
+    console.log(shelf);
   }
 
   render() {
-    console.log(this.state.books)
+    //console.log(this.state.books)
+    
     return (
-      <MainPage books={this.state.books} />
+      <MainPage books={this.state.books} changeShelf={this.changeShelf} />
+      //<SearchPage />
     )
   }
 }
