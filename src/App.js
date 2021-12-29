@@ -25,7 +25,7 @@ class BooksApp extends React.Component {
   }
   
   changeShelf = (book, shelf) => {
-    const changedBook = book;
+    let changedBook = {...book};
     changedBook.shelf = shelf;
     const newBooks = this.state.books.filter(b => b.id !== book.id);
     console.log(newBooks.concat([changedBook]));
@@ -42,8 +42,8 @@ class BooksApp extends React.Component {
     //console.log(this.state.books)
     
     return (
-      <MainPage books={this.state.books} changeShelf={this.changeShelf} />
-      //<SearchPage />
+      //<MainPage books={this.state.books} changeShelf={this.changeShelf} />
+      <SearchPage books={this.state.books} changeShelf={this.changeShelf} />
     )
   }
 }

@@ -26,10 +26,24 @@ class SearchPage extends Component {
       this.setState(() => ({
         searchBooks : [],
         noResults : true
-      }))});
+    }))})
+  }
+  spChangeShelf = (book,shelf) => {
+    this.props.changeShelf(book,shelf)
+    let changedBook = {...book};
+    changedBook.shelf = shelf;
+    const newBooks = this.state.searchBooks.filter(b => b.id !== book.id);
+    this.setState((currentState) => ({
+        searchBooks : newBooks.concat([changedBook])
+    }))
   }
   render () {
-    const { query } = this.state
+    let newSearch = this.state.searchBooks;
+    newSearch.forEach((b) => {
+      b.shelf = 'none';
+      this.props.books.find(element => ((element.id === b.id) && (b.shelf = element.shelf)));
+    })
+    console.log(newSearch);
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -44,12 +58,13 @@ class SearchPage extends Component {
                   you don't find a specific author or title. Every search is limited by search terms.
               */}
            <form onSubmit={this.search}>
-             <input type="text" placeholder="Search by title or author" value={query} onChange={(event) => this.updateQuery(event.target.value)}/>
+             <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={(event) => this.updateQuery(event.target.value)}/>
            </form>
            </div>
          </div>
          <div className="search-books-results">
-           {this.state.noResults ? 'The search returned no results' : <BookShelf books={this.state.searchBooks} /> }
+           <BookShelf books={newSearch} changeShelf={this.spChangeShelf} shelfName='none' title='Search Results' emptyShelfMessage='No results'/>
+           <BookShelf books={newSearch} changeShelf={this.spChangeShelf} shelfName='currentlyReading-wantToRead-read' title='Already on Shelf' emptyShelfMessage='No results'/>
          </div>
       </div>
 )}
