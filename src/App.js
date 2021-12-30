@@ -13,9 +13,9 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: true,
     books : [],
     searchBooks : [],
+    searchQuery : '',
   }
 
   componentDidMount() {
@@ -29,22 +29,31 @@ class BooksApp extends React.Component {
   changeShelf = (book, shelf) => {
     let changedBook = {...book};
     changedBook.shelf = shelf;
-    const newBooks = this.state.books.filter(b => b.id !== book.id);
+    let newBooks = this.state.books.filter(b => b.id !== book.id);
     console.log(newBooks.concat([changedBook]));
     BooksAPI.update(book, shelf).then((book,shelf) => {
       this.setState((currentState) => ({
         books : newBooks.concat([changedBook])
       }))
-    })
+    }).then(() => {
+      newBooks = this.state.searchBooks.filter(b => b.id !== book.id);
+      console.log(newBooks);
+      newBooks === [] || this.setState((currentState) => ({
+        searchBooks : newBooks.concat([changedBook])
+    }))})
     console.log(changedBook);
     console.log(shelf);
   }
   search = (query) => {
+    this.setState(() => ({
+      searchQuery: query,
+    }))
+    let searchResultArray = [];
     BooksAPI.search(query, 20).then((searchResult) => {
       console.log(query);
       console.log(searchResult);
-      let searchResultArray = [];
       Array.isArray(searchResult) && (searchResultArray = searchResult);
+    }).then(() => {
       this.setState(() => ({
         searchBooks : searchResultArray
     }))}).then(() =>{
@@ -62,8 +71,8 @@ class BooksApp extends React.Component {
     return (
       <Router>
         <Routes>
-          <Route exact path='/' element={<MainPage books={this.state.books} searchBooks={this.state.searchBooks} onChange={this.search} changeShelf={this.changeShelf} />} />
-          <Route path='/search' element={<SearchPage books={this.state.books} searchBooks={this.state.searchBooks} onChange={this.search} changeShelf={this.changeShelf} />} />
+          <Route exact path='/' element={<MainPage books={this.state.books} changeShelf={this.changeShelf}/>} />
+          <Route path='/search' element={<SearchPage books={this.state.books} searchBooks={this.state.searchBooks} onChange={this.search} changeShelf={this.changeShelf} searchQuery={this.state.searchQuery}/>} />
         </Routes>
       </Router>
     )

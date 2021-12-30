@@ -4,19 +4,26 @@ import { Link } from 'react-router-dom';
 
 class SearchPage extends Component {
   state ={
-    showSearchPage: true,
     query : '',
     noResults : false,
   }
+  componentDidMount() {
+    this.setState(() => ({
+      query: this.props.searchQuery,
+    }))
+  }
+  
   updateQuery = (query) => {
-    console.log(query)
     this.setState(() => ({
       query: query,
     }))
-    this.props.onChange(query);
+    let searchString = query;
+    searchString === '' && (searchString = ' '); //explain this ******
+    this.props.onChange(searchString);
   }
 
   spChangeShelf = (book,shelf) => {
+    console.log('hi!')
     this.props.changeShelf(book,shelf)
     let changedBook = {...book};
     changedBook.shelf = shelf;
@@ -45,8 +52,8 @@ class SearchPage extends Component {
            </div>
          </div>
          <div className="search-books-results">
-           <BookShelf books={this.props.searchBooks} changeShelf={this.spChangeShelf} shelfName='none' title='Not on Shelf' emptyShelfMessage='No results'/>
-           <BookShelf books={this.props.searchBooks} changeShelf={this.spChangeShelf} shelfName='currentlyReading-wantToRead-read' title='Already on Shelf' emptyShelfMessage='No results'/>
+           <BookShelf books={this.props.searchBooks} changeShelf={this.props.changeShelf} shelfName='none' title='Not on Shelf' emptyShelfMessage='No results'/>
+           <BookShelf books={this.props.searchBooks} changeShelf={this.props.changeShelf} shelfName='currentlyReading-wantToRead-read' title='Already on Shelf' emptyShelfMessage='No results'/>
          </div>
       </div>
 )}
