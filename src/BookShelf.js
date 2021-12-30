@@ -4,8 +4,7 @@ import Book from './Book.js';
 class BookShelf extends Component {
   render () {
     const { books, changeShelf, shelfName, title, emptyShelfMessage } = this.props
-    const booksOnShelf = books.filter(b => shelfName.includes(b.shelf)) //test for 'none' for the SearchPage component to work
-    console.log(booksOnShelf)
+    const booksOnShelf = books.filter(b => shelfName.includes(b.shelf))
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">{title}</h2>

@@ -3,6 +3,7 @@ import MainPage from './MainPage.js'
 import SearchPage from './SearchPage.js'
 import * as BooksAPI from './BooksAPI.js'
 import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
@@ -14,6 +15,7 @@ class BooksApp extends React.Component {
      */
     showSearchPage: true,
     books : [],
+    searchBooks : [],
   }
 
   componentDidMount() {
@@ -37,13 +39,33 @@ class BooksApp extends React.Component {
     console.log(changedBook);
     console.log(shelf);
   }
-
+  search = (query) => {
+    BooksAPI.search(query, 20).then((searchResult) => {
+      console.log(query);
+      console.log(searchResult);
+      let searchResultArray = [];
+      Array.isArray(searchResult) && (searchResultArray = searchResult);
+      this.setState(() => ({
+        searchBooks : searchResultArray
+    }))}).then(() =>{
+      let newSearch = [...this.state.searchBooks];
+      newSearch.forEach((b) => {
+      b.shelf = 'none';
+      this.state.books.find(element => ((element.id === b.id) && (b.shelf = element.shelf)));
+      })
+      newSearch && this.setState(() => ({
+        searchBooks: newSearch,
+    }))})
+  }
   render() {
-    //console.log(this.state.books)
     
     return (
-      //<MainPage books={this.state.books} changeShelf={this.changeShelf} />
-      <SearchPage books={this.state.books} changeShelf={this.changeShelf} />
+      <Router>
+        <Routes>
+          <Route exact path='/' element={<MainPage books={this.state.books} searchBooks={this.state.searchBooks} onChange={this.search} changeShelf={this.changeShelf} />} />
+          <Route path='/search' element={<SearchPage books={this.state.books} searchBooks={this.state.searchBooks} onChange={this.search} changeShelf={this.changeShelf} />} />
+        </Routes>
+      </Router>
     )
   }
 }
