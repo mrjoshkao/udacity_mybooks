@@ -3,35 +3,6 @@ import BookShelf from './BookShelf.js';
 import { Link } from 'react-router-dom';
 
 class SearchPage extends Component {
-  state ={
-    query : '',
-    noResults : false,
-  }
-  componentDidMount() {
-    this.setState(() => ({
-      query: this.props.searchQuery,
-    }))
-  }
-  
-  updateQuery = (query) => {
-    this.setState(() => ({
-      query: query,
-    }))
-    let searchString = query;
-    searchString === '' && (searchString = ' '); //explain this ******
-    this.props.onChange(searchString);
-  }
-
-  spChangeShelf = (book,shelf) => {
-    console.log('hi!')
-    this.props.changeShelf(book,shelf)
-    let changedBook = {...book};
-    changedBook.shelf = shelf;
-    const newBooks = this.props.searchBooks.filter(b => b.id !== book.id);
-    this.setState((currentState) => ({
-        searchBooks : newBooks.concat([changedBook])
-    }))
-  }
   render () {
     return (
       <div className="search-books">
@@ -47,7 +18,7 @@ class SearchPage extends Component {
                   you don't find a specific author or title. Every search is limited by search terms.
               */}
 
-           <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={(event) => this.updateQuery(event.target.value)}/>
+           <input type="text" placeholder="Search by title or author" value={this.props.searchQuery} onChange={(event) => this.props.onChange(event.target.value)}/>
 
            </div>
          </div>

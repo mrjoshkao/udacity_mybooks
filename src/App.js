@@ -44,30 +44,34 @@ class BooksApp extends React.Component {
     console.log(changedBook);
     console.log(shelf);
   }
+  
   search = (query) => {
     this.setState(() => ({
       searchQuery: query,
     }))
     let searchResultArray = [];
+    query === '' ? (
+      this.setState(() => ({
+        searchBooks : searchResultArray
+    }))) : (
     BooksAPI.search(query, 20).then((searchResult) => {
       console.log(query);
       console.log(searchResult);
       Array.isArray(searchResult) && (searchResultArray = searchResult);
-    }).then(() => {
       this.setState(() => ({
         searchBooks : searchResultArray
     }))}).then(() =>{
       let newSearch = [...this.state.searchBooks];
       newSearch.forEach((b) => {
-      b.shelf = 'none';
-      this.state.books.find(element => ((element.id === b.id) && (b.shelf = element.shelf)));
+        b.shelf = 'none';
+        this.state.books.find(element => ((element.id === b.id) && (b.shelf = element.shelf)));
       })
       newSearch && this.setState(() => ({
         searchBooks: newSearch,
     }))})
-  }
+  )}
+  
   render() {
-    
     return (
       <Router>
         <Routes>
@@ -75,8 +79,7 @@ class BooksApp extends React.Component {
           <Route path='/search' element={<SearchPage books={this.state.books} searchBooks={this.state.searchBooks} onChange={this.search} changeShelf={this.changeShelf} searchQuery={this.state.searchQuery}/>} />
         </Routes>
       </Router>
-    )
-  }
+  )}
 }
 
 export default BooksApp
