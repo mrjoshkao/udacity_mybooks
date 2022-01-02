@@ -1,15 +1,16 @@
 # MyReads Project
 
-This is the starter template for the final assessment project for Udacity's React Fundamentals course. The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
+This application is written according to this [rubric](https://review.udacity.com/#!/rubrics/918/view). Some notes:
 
-Of course, you are free to start this project from scratch if you wish! Just be sure to use [Create React App](https://github.com/facebookincubator/create-react-app) to bootstrap the project.
+* [`package.json`](package.json) has version numbers updated from the original template. One of the major updates is to 'react-router-dom' which handles routes a little differently than in react 15.5.4
+* The search page looks different from the template because it renders the same bookshelf component that the main page does. It contains 2 such components, one to handle search results that match with none of the shelves on the main page and a component to handle the books that do exist on one of shelves of the main page
+* If you assign the default books to the 'none' shelf, I have so far not found a way to get them back without going into your dev tools application tab and deleting the token generated for the API calls: this forces the app to generate a new token and when you access the API with that token, the default books are back
 
 ## TL;DR
 
-To get started developing right away:
-
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
+* if runnig on a local machine, navigate to localhost:3000 to view the result
 
 ## What You're Getting
 ```bash
@@ -23,16 +24,19 @@ To get started developing right away:
     ├── App.css # Styles for your app. Feel free to customize this as you desire.
     ├── App.js # This is the root of your app. Contains static HTML right now.
     ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
+    ├── Book.js
+    ├── BookShelf.js
+    ├── BookShelfChanger.js
     ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
     ├── icons # Helpful images for your app. Use at your discretion.
     │   ├── add.svg
     │   ├── arrow-back.svg
     │   └── arrow-drop-down.svg
+    ├── MainPage.js
+    ├── SearchPage.js
     ├── index.css # Global styles. You probably won't need to change anything here.
     └── index.js # You should not need to modify this file. It is used for DOM rendering only.
 ```
-
-Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
 
 ## Backend Server
 

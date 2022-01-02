@@ -17,9 +17,7 @@ class SearchPage extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
               */}
-
            <input type="text" placeholder="Search by title or author" value={this.props.searchQuery} onChange={(event) => this.props.onChange(event.target.value)}/>
-
            </div>
          </div>
          <div className="search-books-results">
@@ -27,7 +25,7 @@ class SearchPage extends Component {
            <BookShelf books={this.props.searchBooks} changeShelf={this.props.changeShelf} shelfName='currentlyReading-wantToRead-read' title='Already on Shelf' emptyShelfMessage='No results'/>
          </div>
       </div>
-)}
+  )}
 }
 
 export default SearchPage
