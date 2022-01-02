@@ -5,7 +5,7 @@ This application is written according to this [rubric](https://review.udacity.co
 * [`package.json`](package.json) has version numbers updated from the original template. One of the major updates is to 'react-router-dom' which handles routes a little differently than in react 15.5.4
 * The search page looks different from the template because it renders the same bookshelf component that the main page does. It contains 2 such components, one to handle search results that match with none of the shelves on the main page and a component to handle the books that do exist on one of shelves of the main page
 * If you assign the default books to the 'none' shelf, I have so far not found a way to get them back without going into your dev tools application tab and deleting the token generated for the API calls: this forces the app to generate a new token and when you access the API with that token, the default books are back
-* The rest of this README.md is from the original template (source: Udacity)
+* The rest of this README.md and the css styles are from the original template (source: Udacity)
 
 ## TL;DR
 
