@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/udacity_mybooks/static/css/main.1420acd8.css",
+    "main.js": "/udacity_mybooks/static/js/main.58c3890f.js",
+    "index.html": "/udacity_mybooks/index.html",
+    "static/media/arrow-back.svg": "/udacity_mybooks/static/media/arrow-back.cd079cab42defead9875.svg",
+    "static/media/add.svg": "/udacity_mybooks/static/media/add.1b5d9b6afb5557f7992c.svg",
+    "static/media/arrow-drop-down.svg": "/udacity_mybooks/static/media/arrow-drop-down.4378492a3a09dbfc31ff.svg",
+    "main.1420acd8.css.map": "/udacity_mybooks/static/css/main.1420acd8.css.map",
+    "main.58c3890f.js.map": "/udacity_mybooks/static/js/main.58c3890f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1420acd8.css",
+    "static/js/main.58c3890f.js"
+  ]
+}
